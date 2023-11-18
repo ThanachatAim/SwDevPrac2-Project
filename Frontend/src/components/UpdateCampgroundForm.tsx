@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 export default function UpdateCampgroundForm({
     params,
 }: {
-    params: Object;
+    params: { hid: string };
 }) {
     const updateCampground = async (UpdateCampgroundForm: FormData) => {
         "use server";
