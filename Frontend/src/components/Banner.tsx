@@ -6,12 +6,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 export default function Banner() {
-    const covers = [
-        "/img/cover.jpg",
-        "/img/cover2.jpg",
-        "/img/cover3.jpg",
-        "/img/cover4.jpg",
-    ];
+    const covers = ["/img/camp1.jpg", "/img/camp2.jpg", "/img/camp3.jpg"];
     const [index, setIndex] = useState(0);
     const router = useRouter();
 
@@ -30,7 +25,7 @@ export default function Banner() {
                 rel="stylesheet"
             ></link>
             <Image
-                src={covers[index % 4]}
+                src={covers[index % 3]}
                 alt="cover"
                 fill={true}
                 priority
@@ -57,10 +52,10 @@ export default function Banner() {
             hover:bg-cyan-600 hover:text-white hover:border-transparent"
                 onClick={(e) => {
                     e.stopPropagation();
-                    router.push("/hospital");
+                    router.push("/campground");
                 }}
             >
-                Select Vaccine Center
+                Select Campground
             </button>
         </div>
     );
