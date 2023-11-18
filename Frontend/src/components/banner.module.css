@@ -1,0 +1,35 @@
+.banner{
+    display: block;
+    padding: 5px;
+    margin: 0;
+    width: 100vw;
+    height: 65vh;
+    position: relative;
+}
+
+.bannerText{
+    position: relative;
+    top:100px;
+    z-index: 20;
+    text-align: center;
+}
+
+.heading2{
+    padding: 20px;
+    font-family: 'Kanit', sans-serif;
+    text-align: center;
+    font-size: 60px;
+}
+
+.heading{
+    font-family: 'Kanit', sans-serif;
+    text-align: center;
+    font-size: 80px;
+}
+
+.highlight {
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 5%;
+    border: 5px dashed;
+}
