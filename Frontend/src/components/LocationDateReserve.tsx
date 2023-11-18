@@ -10,7 +10,7 @@ export default function LocationDateReserve({onDateChange, onLocationChange}
     :{onDateChange:Function, onLocationChange:Function}){
 
     const [reserveDate, setReservation] = useState<Dayjs | null>(null)
-    const [location, setLocation] = useState('Chula')
+    const [location, setLocation] = useState('Khao Yai')
 
     return (
         <div className="bg-slate-100 rounded-lg space-x-5 space-y-2 
@@ -24,9 +24,9 @@ export default function LocationDateReserve({onDateChange, onLocationChange}
             name="location" id="location" value={location}
             onChange={(e)=>{setLocation(e.target.value); onLocationChange(e.target.value)}}
             className="h-[2em] w-[200px]">
-                <MenuItem value="Chula">Chulalongkorn Hospital</MenuItem>
-                <MenuItem value="Rajavithi">Rajavithi Hospital</MenuItem>
-                <MenuItem value="Thammasat">Thammasat University Hospital</MenuItem>
+                <MenuItem value="Khao Yai">Khao Yai</MenuItem>
+                <MenuItem value="Doi Inthanon">Doi Inthanon</MenuItem>
+                <MenuItem value="Phu Chifa">Phu Chifa</MenuItem>
             </Select>
         </div>
     )

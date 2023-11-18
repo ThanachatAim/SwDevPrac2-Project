@@ -3,20 +3,20 @@ import Campground from "@/db/models/Campground";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export default function AddHospitalForm() {
-    const addHospital = async (AddHospitalForm: FormData) => {
+export default function AddCampgroundForm() {
+    const addCampground = async (AddCampgroundForm: FormData) => {
         "use server";
-        const name = AddHospitalForm.get("name");
-        const address = AddHospitalForm.get("address");
-        const district = AddHospitalForm.get("district");
-        const province = AddHospitalForm.get("province");
-        const postalcode = AddHospitalForm.get("postalcode");
-        const tel = AddHospitalForm.get("tel");
-        const picture = AddHospitalForm.get("picture");
+        const name = AddCampgroundForm.get("name");
+        const address = AddCampgroundForm.get("address");
+        const district = AddCampgroundForm.get("district");
+        const province = AddCampgroundForm.get("province");
+        const postalcode = AddCampgroundForm.get("postalcode");
+        const tel = AddCampgroundForm.get("tel");
+        const picture = AddCampgroundForm.get("picture");
         console.log(name);
         try {
             await dbConnect();
-            const hospital = await Campground.create({
+            const campground = await Campground.create({
                 name: name,
                 address: address,
                 district: district,
@@ -25,17 +25,17 @@ export default function AddHospitalForm() {
                 tel: tel,
                 picture: picture,
             });
-            console.log(hospital);
+            console.log(campground);
         } catch (error) {
             console.log(error);
         }
-        revalidateTag("hospitals");
-        redirect("/hospital");
+        revalidateTag("campgrounds");
+        redirect("/campground");
     };
 
     return (
-        <form action={addHospital}>
-            <div className="text-xl text-blue-700">Add Hospital</div>
+        <form action={addCampground}>
+            <div className="text-xl text-blue-700">Add Campground</div>
             <div className="flex items-center w-1/2 my-2 m-auto">
                 <label
                     className="w-auto block text-gray-700 pr-4"
@@ -48,7 +48,7 @@ export default function AddHospitalForm() {
                     required
                     id="name"
                     name="name"
-                    placeholder="Hospital Name"
+                    placeholder="Campground Name"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"
                 />
@@ -65,7 +65,7 @@ export default function AddHospitalForm() {
                     required
                     id="address"
                     name="address"
-                    placeholder="Hospital Address"
+                    placeholder="Campground Address"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"
                 />
@@ -82,7 +82,7 @@ export default function AddHospitalForm() {
                     required
                     id="district"
                     name="district"
-                    placeholder="Hospital District"
+                    placeholder="Campground District"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"
                 />
@@ -99,7 +99,7 @@ export default function AddHospitalForm() {
                     required
                     id="province"
                     name="province"
-                    placeholder="Hospital Province"
+                    placeholder="Campground Province"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"
                 />
@@ -116,7 +116,7 @@ export default function AddHospitalForm() {
                     required
                     id="postalcode"
                     name="postalcode"
-                    placeholder="Hospital Postal Code"
+                    placeholder="Campground Postal Code"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"
                 />
@@ -130,7 +130,7 @@ export default function AddHospitalForm() {
                     required
                     id="tel"
                     name="tel"
-                    placeholder="Hospital Telephone Number"
+                    placeholder="Campground Telephone Number"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"
                 />
