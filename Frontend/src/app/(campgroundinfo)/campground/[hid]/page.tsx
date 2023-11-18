@@ -1,6 +1,11 @@
 import Image from "next/image";
 import getCampground from "@/libs/getCampground";
 import Link from "next/link";
+import UpdateCampgroundForm from "@/components/UpdateCampgroundForm";
+import { getCampgrounds } from "@/libs/getCampgrounds";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import getUserProfile from "@/libs/getUserProfile";
 
 export default async function CampgroundDetailPage({
     params,
@@ -8,6 +13,14 @@ export default async function CampgroundDetailPage({
     params: { hid: string };
 }) {
     const campgroundDetail = await getCampground(params.hid);
+
+    const campgrounds = getCampgrounds();
+    let profile = null;
+
+    const session = await getServerSession(authOptions);
+    if (session) {
+        profile = await getUserProfile(session.user.token);
+    }
 
     // const mockHospitalRepo = new Map()
     // mockHospitalRepo.set("001",{name: 'Chulalongkorn Hospital', image: "/img/chula.jpg"})
@@ -48,13 +61,14 @@ export default async function CampgroundDetailPage({
                     >
                         <button
                             className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2
-                text-white shadow-sm"
+                text-white shadow-sm mt-5"
                         >
                             Booking
                         </button>
                     </Link>
                 </div>
             </div>
+            {profile?.data.role == "admin" ? <UpdateCampgroundForm params={params}/> : null}
         </main>
     );
 }
