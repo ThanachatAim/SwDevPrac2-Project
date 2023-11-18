@@ -11,15 +11,15 @@ export default async function CampgroundCatalog({
         <>
             Explore {campgroundJsonReady.count} campgrounds in our catalog
             <div className="m-10 flex flex-row flex-wrap justify-around items-around">
-                {campgroundJsonReady.data.map((vacItem: Object) => (
+                {campgroundJsonReady.data.map((campgroundItem: Object) => (
                     <Link
-                        href={`/campground/${vacItem.id}`}
+                        href={`/campground/${campgroundItem.id}`}
                         className="w-[100%] sm:w-[50%] md:w-[30%] lg:w-[25%]
                     p-2 sm:p-4 md:p-4 lg:p-8"
                     >
                         <ProductCard
-                            vacName={vacItem.name}
-                            imgSrc={vacItem.picture}
+                            campgroundName={campgroundItem.name}
+                            imgSrc={campgroundItem.picture}
                         />
                     </Link>
                 ))}

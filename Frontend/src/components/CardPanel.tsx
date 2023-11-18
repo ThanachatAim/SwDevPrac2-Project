@@ -17,14 +17,14 @@ export default function CardPanel() {
 
     const ratingReducer = (
         ratingMap: Map<string, number | null>,
-        action: { type: string; vacName: string; rating: number | null }
+        action: { type: string; campgroundName: string; rating: number | null }
     ) => {
         switch (action.type) {
             case "add": {
-                return new Map(ratingMap.set(action.vacName, action.rating));
+                return new Map(ratingMap.set(action.campgroundName, action.rating));
             }
             case "remove": {
-                ratingMap.delete(action.vacName);
+                ratingMap.delete(action.campgroundName);
                 return new Map(ratingMap);
             }
             default:
@@ -48,19 +48,19 @@ export default function CardPanel() {
     return (
         <div>
             <div className="m-10 flex flex-row flex-wrap justify-around items-around">
-                {campgroundResponse.data.map((vacItem: Object) => (
-                    <Link href={`/hospital/${vacItem.id}`} className="w-1/5">
+                {campgroundResponse.data.map((campgroundItem: Object) => (
+                    <Link href={`/campground/${campgroundItem.id}`} className="w-1/5">
                         <ProductCard
-                            vacName={vacItem.name}
-                            imgSrc={vacItem.picture}
-                            onRatingUpdate={(vac: string, rating: number) =>
+                            campgroundName={campgroundItem.name}
+                            imgSrc={campgroundItem.picture}
+                            onRatingUpdate={(campground: string, rating: number) =>
                                 dispatchRating({
                                     type: "add",
-                                    vacName: vac,
+                                    campgroundName: campground,
                                     rating: rating,
                                 })
                             }
-                            rating={ratingMap.get(vacItem.name) ?? 0}
+                            rating={ratingMap.get(campgroundItem.name) ?? 0}
                         />
                     </Link>
                 ))}
@@ -68,19 +68,19 @@ export default function CardPanel() {
             <div className="w-full text-xl font-medium mx-2">
                 Rating List:{ratingMap.size}
             </div>
-            {Array.from(ratingMap.entries()).map(([vac, rating]) => (
+            {Array.from(ratingMap.entries()).map(([campground, rating]) => (
                 <div
-                    key={vac}
+                    key={campground}
                     onClick={() =>
                         dispatchRating({
                             type: "remove",
-                            vacName: vac,
+                            campgroundName: campground,
                             rating: rating,
                         })
                     }
                     className="mx-2"
                 >
-                    {vac}: Rating = {rating}
+                    {campground}: Rating = {rating}
                 </div>
             ))}
         </div>
