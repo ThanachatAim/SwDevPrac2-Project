@@ -12,8 +12,8 @@ export const bookSlice = createSlice({
     initialState,
     reducers: {
         addBooking: (state, action: PayloadAction<BookingItem>) => {
-            state.bookItems = [action.payload];
-            console.log(state.bookItems);
+            state.bookItems.unshift(action.payload);
+            state.bookItems = state.bookItems.slice(0, 3);
         },
         removeBooking: (state, action: PayloadAction<BookingItem>) => {
             const remainItems = state.bookItems.filter((obj) => {
