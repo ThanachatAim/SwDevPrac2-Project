@@ -3,5 +3,6 @@ export interface BookingItem {
     surname: string;
     id: string;
     campground: string;
-    date: string;
+    date1: string;
+    date2: string;
 }

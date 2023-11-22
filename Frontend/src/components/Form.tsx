@@ -15,6 +15,7 @@ export default function Form() {
 
     const [campDate, setCampDate] = useState<Dayjs | null>(null);
     const [campLocation, setCampLocation] = useState<string>("Khao Yai");
+    const [returnDate, setReturnDate] = useState<Dayjs | null>(null);
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -24,14 +25,16 @@ export default function Form() {
             surnameRef.current &&
             citizenIdRef.current &&
             campDate &&
-            campLocation
+            campLocation &&
+            returnDate
         ) {
             const item: BookingItem = {
                 name: nameRef.current.value.trim(),
                 surname: surnameRef.current.value.trim(),
                 id: citizenIdRef.current.value.trim(),
                 campground: campLocation,
-                date: campDate.format("YYYY-MM-DD"),
+                date1: campDate.format("YYYY-MM-DD"),
+                date2: returnDate.format("YYYY-MM-DD"),
             };
             alert("booking Success");
             dispatch(addBooking(item));
@@ -102,6 +105,16 @@ export default function Form() {
                     onLocationChange={(value: string) => {
                         setCampLocation(value);
                     }}
+                    disableLocationSelection={false}
+                />
+                <LocationDateReserve
+                    onDateChange={(value: Dayjs) => {
+                        setReturnDate(value);
+                    }}
+                    onLocationChange={(value: string) => {
+                        // setCampLocation(value);
+                    }}
+                    disableLocationSelection={true}
                 />
             </div>
 
