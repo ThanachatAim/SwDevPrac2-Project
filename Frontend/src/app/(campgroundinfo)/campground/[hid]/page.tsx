@@ -6,6 +6,7 @@ import { getCampgrounds } from "@/libs/getCampgrounds";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getUserProfile from "@/libs/getUserProfile";
+import deleteCampground from "@/libs/deleteCampground";
 
 export default async function CampgroundDetailPage({
     params,
@@ -21,6 +22,14 @@ export default async function CampgroundDetailPage({
     if (session) {
         profile = await getUserProfile(session.user.token);
     }
+
+    const onDelete = async () => {
+        try {
+            const res = await deleteCampground(params.hid);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // const mockHospitalRepo = new Map()
     // mockHospitalRepo.set("001",{name: 'Chulalongkorn Hospital', image: "/img/chula.jpg"})
