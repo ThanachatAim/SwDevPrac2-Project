@@ -60,7 +60,6 @@ export default function LocationDateReserve({
                         onLocationChange(e.target.value);
                     }}
                     className="h-[2em] w-[200px]"
-                    disabled={disableLocationSelection}
                 >
                     <MenuItem value="Khao Yai">Khao Yai</MenuItem>
                     <MenuItem value="Doi Inthanon">Doi Inthanon</MenuItem>

@@ -1,5 +1,6 @@
 "use client";
-
+import { dbConnect } from "@/db/dbConnect";
+import addNewBookingServerFunction from "./addNewBookingServerFunction";
 import LocationDateReserve from "@/components/LocationDateReserve";
 import { useState, useRef } from "react";
 import { Dayjs } from "dayjs";
@@ -7,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { BookingItem } from "../../interfaces";
 import { addBooking } from "@/redux/features/bookSlice";
+import Booking from "@/db/models/Booking";
 
 export default function Form() {
     const nameRef = useRef<HTMLInputElement>(null);
@@ -38,6 +40,57 @@ export default function Form() {
             };
             alert("booking Success");
             dispatch(addBooking(item));
+        }
+    };
+
+    const addNewBooking = async () => {
+        if (nameRef.current && campDate && campLocation && returnDate) {
+            // const name = nameRef.current.value.trim();
+            // const address = AddCampgroundForm.get("address");
+            // const district = AddCampgroundForm.get("district");
+            // const province = AddCampgroundForm.get("province");
+            // const postalcode = AddCampgroundForm.get("postalcode");
+            // const tel = AddCampgroundForm.get("tel");
+            // const picture = AddCampgroundForm.get("picture");
+            // console.log(name);
+
+            const bookingDate = campDate;
+            const checkoutDate = returnDate;
+            const name = nameRef.current.value.trim();
+            const campground = campLocation;
+
+            try {
+                addNewBookingServerFunction({
+                    name,
+                    bookingDate,
+                    checkoutDate,
+                    campground,
+                });
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            // // const user
+            // try {
+            //     await dbConnect();
+            //     const booking = await Booking.create({
+            //         // name: name,
+            //         // address: address,
+            //         // district: district,
+            //         // province: province,
+            //         // postalcode: postalcode,
+            //         // tel: tel,
+            //         // picture: picture,
+            //         bookingDate: bookingDate,
+            //         checkoutDate: checkoutDate,
+            //         name: name,
+            //         campground: campground,
+            //     });
+            //     console.log(booking);
+            // } catch (error) {
+            //     console.log(error);
+            // }
+            // revalidateTag("campgrounds");
+            // redirect("/campground");
         }
     };
 
@@ -124,7 +177,10 @@ export default function Form() {
             <button
                 className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2
     text-white shadow-sm"
-                onClick={makeBooking}
+                onClick={() => {
+                    makeBooking();
+                    addNewBooking();
+                }}
             >
                 Book Campground
             </button>
