@@ -1,10 +1,11 @@
-export default async function deleteCampground(id: string) {
+export default async function deleteCampground(id: string, token: string) {
     const response = await fetch(
         `http://localhost:5000/api/v1/campgrounds/${id}`,
         {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + token
             },
         }
     );

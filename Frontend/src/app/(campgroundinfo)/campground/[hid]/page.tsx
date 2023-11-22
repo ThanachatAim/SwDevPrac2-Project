@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getUserProfile from "@/libs/getUserProfile";
 import deleteCampground from "@/libs/deleteCampground";
+import RemoveCampgroundButton from "@/components/RemoveCampgroundButton";
 
 export default async function CampgroundDetailPage({
     params,
@@ -22,14 +23,6 @@ export default async function CampgroundDetailPage({
     if (session) {
         profile = await getUserProfile(session.user.token);
     }
-
-    const onDelete = async () => {
-        try {
-            const res = await deleteCampground(params.hid);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     // const mockHospitalRepo = new Map()
     // mockHospitalRepo.set("001",{name: 'Chulalongkorn Hospital', image: "/img/chula.jpg"})
@@ -75,12 +68,12 @@ export default async function CampgroundDetailPage({
                             Booking
                         </button>
                     </Link>
-                    <button
-                        className="block rounded-md bg-red-400 hover:bg-red-600 px-3 py-2
-                        text-white shadow-sm mt-5"
-                        >
-                        Remove
-                    </button>
+                    {profile?.data.role == "admin" ? <Link
+                        href={"/campground"}
+                    >
+                    <RemoveCampgroundButton params={params} token={session?.user.token ?? ""}/>
+                    </Link> : null}
+                    
                 </div>
             </div>
             {profile?.data.role == "admin" ? <UpdateCampgroundForm params={params}/> : null}
