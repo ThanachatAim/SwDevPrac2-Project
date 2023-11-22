@@ -1,5 +1,4 @@
 import CampgroundCatalog from "@/components/CampgroundCatalog";
-// import { getHospitals } from "@/libs/getCampgrounds";
 import { getCampgrounds } from "@/libs/getCampgrounds";
 import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
@@ -7,9 +6,9 @@ import CardPanel from "@/components/CardPanel";
 import getUserProfile from "@/libs/getUserProfile";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import AddHospitalForm from "@/components/AddHospitalForm";
+import AddCampgroundForm from "@/components/AddCampgroundForm";
 
-export default async function Hospital() {
+export default async function Campground() {
     const campgrounds = getCampgrounds();
     let profile = null;
 
@@ -31,7 +30,7 @@ export default async function Hospital() {
                 <CampgroundCatalog campgroundJson={campgrounds} />
             </Suspense>
 
-            {profile?.data.role == "admin" ? <AddHospitalForm /> : null}
+            {profile?.data.role == "admin" ? <AddCampgroundForm /> : null}
         </main>
     );
 }

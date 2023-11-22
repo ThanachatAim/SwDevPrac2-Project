@@ -14,7 +14,7 @@ export default function Form() {
     const citizenIdRef = useRef<HTMLInputElement>(null);
 
     const [campDate, setCampDate] = useState<Dayjs | null>(null);
-    const [campLocation, setCampLocation] = useState<string>("Chula");
+    const [campLocation, setCampLocation] = useState<string>("Khao Yai");
 
     const dispatch = useDispatch<AppDispatch>();
 
