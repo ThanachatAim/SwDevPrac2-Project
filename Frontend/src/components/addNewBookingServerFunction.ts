@@ -18,9 +18,9 @@ export default async function addNewBookingServerFunction({
     try {
         await dbConnect();
         const booking = await Booking.create({
-            name: name,
             bookingDate: bookingDate,
             checkoutDate: checkoutDate,
+            user: name,
             campground: campground,
         });
         console.log(booking);
