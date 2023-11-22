@@ -10,7 +10,7 @@ import { BookingItem } from "../../interfaces";
 import { addBooking } from "@/redux/features/bookSlice";
 import Booking from "@/db/models/Booking";
 
-export default function Form() {
+export default function Form({ userId }: { userId: string }) {
     const nameRef = useRef<HTMLInputElement>(null);
     const surnameRef = useRef<HTMLInputElement>(null);
     const citizenIdRef = useRef<HTMLInputElement>(null);
@@ -44,7 +44,7 @@ export default function Form() {
     };
 
     const addNewBooking = async () => {
-        if (nameRef.current && campDate && campLocation && returnDate) {
+        if (campDate && campLocation && returnDate) {
             // const name = nameRef.current.value.trim();
             // const address = AddCampgroundForm.get("address");
             // const district = AddCampgroundForm.get("district");
@@ -56,9 +56,14 @@ export default function Form() {
 
             const bookingDate = campDate;
             const checkoutDate = returnDate;
-            const name = nameRef.current.value.trim();
-            const campground = campLocation;
-
+            // const name = nameRef.current.value.trim();
+            const name = userId;
+            let campground = "6558c43c9a8f113331b57bed";
+            if (campLocation == "Doi Inthanon") {
+                campground = "6558c4df9a8f113331b57bf0";
+            } else if (campLocation == "Phu Chifa") {
+                campground = "6558c6729a8f113331b57bf3";
+            }
             try {
                 addNewBookingServerFunction({
                     name,
