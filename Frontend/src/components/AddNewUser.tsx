@@ -4,6 +4,7 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export default function AddNewUser() {
+
     const addUser = async (AddUser: FormData) => {
         "use server";
         const name = AddUser.get("name");
@@ -11,6 +12,7 @@ export default function AddNewUser() {
         const tel = AddUser.get("tel");
         const role = "user";
         const password = AddUser.get("password");
+        console.log(password);
         try {
             await dbConnect();
             const user = await User.create({
@@ -24,6 +26,8 @@ export default function AddNewUser() {
         } catch (error) {
             console.log(error);
         }
+        revalidateTag("home");
+        redirect("/");
     };
 
     return (
@@ -86,15 +90,15 @@ export default function AddNewUser() {
             <div className="flex items-center w-1/2 my-2 m-auto">
                 <label
                     className="w-auto block text-gray-700 pr-4"
-                    htmlFor="name"
+                    htmlFor="password"
                 >
                     Password
                 </label>
                 <input
                     type="text"
                     required
-                    id="Password"
-                    name="Password"
+                    id="password"
+                    name="password"
                     placeholder="Your Password"
                     className="bg-white border-2 border-gray-200 rounded w-full p-2 
                         text-gray-700 focus:outline-none focus:border-blue-400"

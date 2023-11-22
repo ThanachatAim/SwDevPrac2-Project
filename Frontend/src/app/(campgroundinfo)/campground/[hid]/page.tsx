@@ -66,6 +66,12 @@ export default async function CampgroundDetailPage({
                             Booking
                         </button>
                     </Link>
+                    <button
+                        className="block rounded-md bg-red-400 hover:bg-red-600 px-3 py-2
+                        text-white shadow-sm mt-5"
+                        >
+                        Remove
+                    </button>
                 </div>
             </div>
             {profile?.data.role == "admin" ? <UpdateCampgroundForm params={params}/> : null}
