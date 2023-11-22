@@ -107,6 +107,9 @@ export default function Form() {
                     }}
                     disableLocationSelection={false}
                 />
+                <div className="text-md text-left text-gray-600">
+                    Select Return Date
+                </div>
                 <LocationDateReserve
                     onDateChange={(value: Dayjs) => {
                         setReturnDate(value);

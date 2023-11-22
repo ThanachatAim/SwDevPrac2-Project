@@ -33,7 +33,7 @@ export default function LocationDateReserve({
                     }}
                 />
             </LocalizationProvider>
-            <Select
+            {/* <Select
                 variant="standard"
                 name="location"
                 id="location"
@@ -48,8 +48,25 @@ export default function LocationDateReserve({
                 <MenuItem value="Khao Yai">Khao Yai</MenuItem>
                 <MenuItem value="Doi Inthanon">Doi Inthanon</MenuItem>
                 <MenuItem value="Phu Chifa">Phu Chifa</MenuItem>
-            </Select>
-            {}
+            </Select> */}
+            {disableLocationSelection ? null : (
+                <Select
+                    variant="standard"
+                    name="location"
+                    id="location"
+                    value={location}
+                    onChange={(e) => {
+                        setLocation(e.target.value);
+                        onLocationChange(e.target.value);
+                    }}
+                    className="h-[2em] w-[200px]"
+                    disabled={disableLocationSelection}
+                >
+                    <MenuItem value="Khao Yai">Khao Yai</MenuItem>
+                    <MenuItem value="Doi Inthanon">Doi Inthanon</MenuItem>
+                    <MenuItem value="Phu Chifa">Phu Chifa</MenuItem>
+                </Select>
+            )}
         </div>
     );
 }
