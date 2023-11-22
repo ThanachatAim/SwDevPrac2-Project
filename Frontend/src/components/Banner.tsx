@@ -32,17 +32,17 @@ export default function Banner() {
                 objectFit="cover"
             />
             <div className="relative top-20 z-20 text-center">
-                <h1 className="text-6xl font-bold font-sans bg-slate-200 inline p-3 rounded-2xl border-dashed">
+                <h1 className="z-30 text-6xl font-bold font-sans bg-slate-200 inline p-3 rounded-2xl border-dashed">
                     Campground
                 </h1>
                 <br></br>
                 <br></br>
-                <h3 className="text-4xl font-medium font-kanit bg-slate-200 inline p-3 rounded-2xl border-dashed">
+                <h3 className="text-4xl font-medium font-kanit bg-slate-200 inline p-2 rounded-2xl border-dashed">
                     จองที่ตั้งแคมป์
                 </h3>
             </div>
             {session ? (
-                <div className="z-30 absolute top-5 right-10 font-semibold text-xl">
+                <div className="z-30 absolute top-5 right-10 bg-slate-200 inline p-1 rounded font-semibold text-xl">
                     Hello {session.user?.name}
                 </div>
             ) : null}

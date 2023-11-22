@@ -23,7 +23,7 @@ export default function ProductCard({campgroundName,imgSrc,onRatingUpdate, ratin
                 className='object-cover rounded-t-lg'
                 />
             </div>
-            <div className='w-full h-30 p-[10px] font-kanit'>{campgroundName}</div>
+            <div className='w-full h-30 p-[10px] mt-5 text-2xl'>{campgroundName}</div>
             {
                 onRatingUpdate? <div onClick={(e) => e.stopPropagation()}>
                 <Rating name="simple-controlled" value={rating} onChange={(event, newValue) => {
