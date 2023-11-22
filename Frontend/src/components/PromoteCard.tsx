@@ -15,7 +15,7 @@ export function PromoteCard() {
         flex flex-row"
         >
             <VideoPlayer
-                vdoSrc="/video/getvaccine.mp4"
+                vdoSrc="/video/ThailandNatural.mp4"
                 isPlaying={playing}
             ></VideoPlayer>
             <div className="m-5 my-2 text-lg">
