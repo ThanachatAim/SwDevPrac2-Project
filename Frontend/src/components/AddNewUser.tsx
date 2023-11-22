@@ -1,37 +1,32 @@
+"use client"
 import { dbConnect } from "@/db/dbConnect";
 import User from "@/db/models/User";
+import userRegister from "@/libs/userRegister";
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function AddNewUser() {
 
-    const addUser = async (AddUser: FormData) => {
-        "use server";
-        const name = AddUser.get("name");
-        const email = AddUser.get("email");
-        const tel = AddUser.get("tel");
-        const role = "user";
-        const password = AddUser.get("password");
-        console.log(password);
+    const router = useRouter()
+    
+    const register = async (AddUser: FormData) => {
         try {
-            await dbConnect();
-            const user = await User.create({
-                name: name,
-                email: email,
-                tel: tel,
-                role: role,
-                password: password,
-            });
-            console.log(user);
+            const name = AddUser.get("name");
+            const email = AddUser.get("email");
+            const tel = AddUser.get("tel");
+            const role = "user";
+            const password = AddUser.get("password");
+            const res = await userRegister(name as string, email as string, tel as string, role, password as string);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
-        revalidateTag("home");
-        redirect("/");
+        alert("Register Successful")
+        router.push("/api/auth/signin")
     };
 
+
     return (
-        <form action={addUser}>
+        <form action={register}>
             <div className="text-xl text-blue-700">Create an Account</div>
             <div className="flex items-center w-1/2 my-2 m-auto">
                 <label
@@ -95,7 +90,7 @@ export default function AddNewUser() {
                     Password
                 </label>
                 <input
-                    type="text"
+                    type="password"
                     required
                     id="password"
                     name="password"
