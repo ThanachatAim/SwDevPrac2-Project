@@ -1,44 +1,42 @@
+"use client"
 import { dbConnect } from "@/db/dbConnect";
 import Campground from "@/db/models/Campground";
+import updateCampground from "@/libs/updateCampground";
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import getUserProfile from "@/libs/getUserProfile";
+
 
 export default function UpdateCampgroundForm({
-    params,
+    params,token
 }: {
-    params: { hid: string };
+    params: { hid: string }, token:string;
 }) {
-    const updateCampground = async (UpdateCampgroundForm: FormData) => {
-        "use server";
-        const name = UpdateCampgroundForm.get("name");
-        const address = UpdateCampgroundForm.get("address");
-        const district = UpdateCampgroundForm.get("district");
-        const province = UpdateCampgroundForm.get("province");
-        const postalcode = UpdateCampgroundForm.get("postalcode");
-        const tel = UpdateCampgroundForm.get("tel");
-        const picture = UpdateCampgroundForm.get("picture");
-        console.log(name);
+
+    const router = useRouter()
+
+    const editCampground = async (UpdateCampgroundForm: FormData) => {
         try {
-            await dbConnect();
-            const campground = await Campground.findByIdAndUpdate(params,{
-                name: name,
-                address: address,
-                district: district,
-                province: province,
-                postalcode: postalcode,
-                tel: tel,
-                picture: picture,
-            });
-            console.log(campground);
+            const name = UpdateCampgroundForm.get("name");
+            const address = UpdateCampgroundForm.get("address");
+            const district = UpdateCampgroundForm.get("district");
+            const province = UpdateCampgroundForm.get("province");
+            const postalcode = UpdateCampgroundForm.get("postalcode");
+            const tel = UpdateCampgroundForm.get("tel");
+            const picture = UpdateCampgroundForm.get("picture");
+            const res = await updateCampground(params.hid,token,name as string, address as string, district as string, 
+                province as string, postalcode as string,tel as string, picture as string);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
-        revalidateTag("campgrounds");
-        redirect("/campground");
+        alert("Updated Successful")
+        router.push("/campground")
     };
 
     return (
-        <form action={updateCampground}>
+        <form action={editCampground}>
             <div className="text-xl text-blue-700">Update Campground</div>
             <div className="flex items-center w-1/2 my-2 m-auto">
                 <label

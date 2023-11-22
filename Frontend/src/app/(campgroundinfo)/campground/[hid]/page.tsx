@@ -6,7 +6,6 @@ import { getCampgrounds } from "@/libs/getCampgrounds";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getUserProfile from "@/libs/getUserProfile";
-import deleteCampground from "@/libs/deleteCampground";
 import RemoveCampgroundButton from "@/components/RemoveCampgroundButton";
 
 export default async function CampgroundDetailPage({
@@ -68,15 +67,10 @@ export default async function CampgroundDetailPage({
                             Booking
                         </button>
                     </Link>
-                    {profile?.data.role == "admin" ? <Link
-                        href={"/campground"}
-                    >
-                    <RemoveCampgroundButton params={params} token={session?.user.token ?? ""}/>
-                    </Link> : null}
-                    
+                    {profile?.data.role == "admin" ?<RemoveCampgroundButton params={params} token={session?.user.token ?? ""}/>: null}             
                 </div>
             </div>
-            {profile?.data.role == "admin" ? <UpdateCampgroundForm params={params}/> : null}
+            {profile?.data.role == "admin" ? <UpdateCampgroundForm params={params} token={session?.user.token ?? ""}/> : null}
         </main>
     );
 }
