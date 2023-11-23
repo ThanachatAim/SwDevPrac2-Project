@@ -9,11 +9,13 @@ export default async function addNewBookingServerFunction({
     bookingDate,
     checkoutDate,
     campground,
+    username
 }: {
     name: string;
     bookingDate: Dayjs | null;
     checkoutDate: Dayjs | null;
     campground: string;
+    username: string
 }) {
     try {
         await dbConnect();
@@ -22,6 +24,7 @@ export default async function addNewBookingServerFunction({
             checkoutDate: checkoutDate,
             user: name,
             campground: campground,
+            username: username,
         });
         console.log(booking);
     } catch (error) {

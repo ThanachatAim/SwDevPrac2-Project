@@ -9,100 +9,43 @@ import { AppDispatch } from "@/redux/store";
 import { BookingItem } from "../../interfaces";
 import { addBooking } from "@/redux/features/bookSlice";
 import Booking from "@/db/models/Booking";
+import updateBooking from "@/libs/updateBooking";
+import { useRouter } from "next/navigation";
 
-export default function Form({ userId }: { userId: string }) {
+export default function UpdateBookingForm({ bookingId }: { bookingId: string }) {
     const nameRef = useRef<HTMLInputElement>(null);
     const surnameRef = useRef<HTMLInputElement>(null);
     const citizenIdRef = useRef<HTMLInputElement>(null);
+
+    const router = useRouter()
 
     const [campDate, setCampDate] = useState<Dayjs | null>(null);
     const [campLocation, setCampLocation] = useState<string>("Khao Yai");
     const [returnDate, setReturnDate] = useState<Dayjs | null>(null);
 
-    const dispatch = useDispatch<AppDispatch>();
-
-    const makeBooking = () => {
-        if (
-            nameRef.current &&
-            surnameRef.current &&
-            citizenIdRef.current &&
-            campDate &&
-            campLocation &&
-            returnDate
-        ) {
-            const item: BookingItem = {
-                name: nameRef.current.value.trim(),
-                surname: surnameRef.current.value.trim(),
-                id: citizenIdRef.current.value.trim(),
-                campground: campLocation,
-                date1: campDate.format("YYYY-MM-DD"),
-                date2: returnDate.format("YYYY-MM-DD"),
-            };
-            alert("booking Success");
-            dispatch(addBooking(item));
-        }
-    };
-
-    const addNewBooking = async () => {
-        if (campDate && campLocation && returnDate && nameRef.current) {
-            // const name = nameRef.current.value.trim();
-            // const address = AddCampgroundForm.get("address");
-            // const district = AddCampgroundForm.get("district");
-            // const province = AddCampgroundForm.get("province");
-            // const postalcode = AddCampgroundForm.get("postalcode");
-            // const tel = AddCampgroundForm.get("tel");
-            // const picture = AddCampgroundForm.get("picture");
-            // console.log(name);
-
+    const editBooking = async (UpdateBookingForm: FormData) => {
+        console.log(bookingId)
+        if (campDate && campLocation && returnDate) {
             const bookingDate = campDate;
             const checkoutDate = returnDate;
             // const name = nameRef.current.value.trim();
-            const name = userId;
-            const username = nameRef.current.value
             let campground = "6558c43c9a8f113331b57bed";
             if (campLocation == "Doi Inthanon") {
                 campground = "6558c4df9a8f113331b57bf0";
             } else if (campLocation == "Phu Chifa") {
                 campground = "6558c6729a8f113331b57bf3";
             }
-            try {
-                addNewBookingServerFunction({
-                    name,
-                    bookingDate,
-                    checkoutDate,
-                    campground,
-                    username
-                });
-            } catch (error) {
-                console.error("Error:", error);
-            }
-            // // const user
-            // try {
-            //     await dbConnect();
-            //     const booking = await Booking.create({
-            //         // name: name,
-            //         // address: address,
-            //         // district: district,
-            //         // province: province,
-            //         // postalcode: postalcode,
-            //         // tel: tel,
-            //         // picture: picture,
-            //         bookingDate: bookingDate,
-            //         checkoutDate: checkoutDate,
-            //         name: name,
-            //         campground: campground,
-            //     });
-            //     console.log(booking);
-            // } catch (error) {
-            //     console.log(error);
-            // }
-            // revalidateTag("campgrounds");
-            // redirect("/campground");
-        }
-    };
+        try {
+            const res = await updateBooking(bookingId,"token",campground,bookingDate,checkoutDate);
+        } catch (error) {
+            console.error(error);
+        }}
+        alert("Updated Successful")
+        router.push("/mybooking")
+    }
 
     return (
-        <>
+        <form action={editBooking}>
             <div className="w-fit space-y-2 rounded border-slate-400">
                 <label
                     htmlFor="name"
@@ -184,13 +127,9 @@ export default function Form({ userId }: { userId: string }) {
             <button
                 className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2
     text-white shadow-sm"
-                onClick={() => {
-                    makeBooking();
-                    addNewBooking();
-                }}
             >
-                Book Campground
+                Update Campground
             </button>
-        </>
+        </form>
     );
 }
