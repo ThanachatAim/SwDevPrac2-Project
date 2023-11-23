@@ -18,8 +18,7 @@ export default async function MyBookingPage(){
     
     return (
         <main className="mt-5">
-            {profile?.data.role == "admin" ? <BookingCatalog bookingJson={bookings}/>
-            :<BookingCart/>}
+            <BookingCatalog bookingJson={bookings}/>
         </main>
     )
 }

@@ -14,11 +14,6 @@ const BookingSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    username: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        required: true,
-    },
     campground: {
         type: mongoose.Schema.ObjectId,
         ref: "Campground",
